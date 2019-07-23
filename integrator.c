@@ -1,6 +1,6 @@
 #include "integrator.h"
 
-// probando 1 2 3
+// probando 1 2 3 9876455
 
 void first_step(Integrator *integ, System *sys) {
   for (int i = 0; i < 3 * sys->n_particles; i++) {		// sobre las 3 coordendas de c/ particula
