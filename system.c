@@ -1,5 +1,3 @@
-hola
-
 #include "system.h"
 
 void init_system(System *sys) {
