@@ -1,9 +1,5 @@
 #include "cell.h"       // archivo de disposición de celda
 
-
-// probando 1 2 3 14
-
-
 void init_cells(CellList *clist, System *sys, double size) {
   clist->cells_side = ceil(sys->size / size);			// lado de la red, divido por 2.5 (es el input) y redondeado parriba  = cant de celdas x lados
   clist->size = sys->size/clist->cells_side;
