@@ -1,14 +1,15 @@
-""" La clase Condiciones Iniciales presenta posiciones y velocidades iniciales.  Se panteó un arreglo ccúbico con partículas ubicada una al lado de la otra y un cubo con partículas distribuidas aleatoriamente. También permite leer archivos .xyz y .lammpstrj para extraer datos como velocidades, fuerzas, posiciones.  
+""" La clase Condiciones Iniciales presenta posiciones y velocidades iniciales.  
+Se panteó un arreglo cúbico con partículas ubicadas una al lado de la otra y un cubo con partículas distribuidas aleatoriamente. 
+También permite leer archivos .xyz y .lammpstrj para extraer datos como velocidades, fuerzas, posiciones.  
 Las velocidades iniciales son calculadas de forma aleatoria y con una distribución de Boltzmann
 """
-
 
 import math
 import numpy as np
 
-#
-
 class CondicionesIniciales(object):
+
+"""Posiciones iniciales"""
 
       def __init__(self, particles, size):
          self.particles = particles
@@ -75,8 +76,9 @@ class CondicionesIniciales(object):
          self.coords = coords
          self.vel    = vel
          self.force  = force
-#--------------------------velocidades iniciales---------------------------------
-                      
+
+"""Velocidades Iniciales"""                 
+ 
       def vel_random(self):                                                          #Calcula la velocidad aleatoriamente                
          v_in     = np.random.random_sample((self.particles, 3), dtype=np.float64)   #Genera un array random
          v_cm     = v_in - np.mean(v, axis=1, keepdims = True)                       #Le resta el centro de masa a la velocidad
