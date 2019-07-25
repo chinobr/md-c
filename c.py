@@ -1,6 +1,12 @@
-#Condiciones iniciales del sistema
+""" La clase Condiciones Iniciales presenta posiciones y velocidades iniciales.  Se panteó un arreglo ccúbico con partículas ubicada una al lado de la otra y un cubo con partículas distribuidas aleatoriamente. También permite leer archivos .xyz y .lammpstrj para extraer datos como velocidades, fuerzas, posiciones.  
+Las velocidades iniciales son calculadas de forma aleatoria y con una distribución de Boltzmann
+"""
+
+
 import math
 import numpy as np
+
+#
 
 class CondicionesIniciales(object):
 
