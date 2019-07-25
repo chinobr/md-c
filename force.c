@@ -2,6 +2,9 @@
 
 void newton(System *sys, CellList *clist) {
   double epot = 0.0;
+
+potential= argv[3];
+
   for (int i = 0; i < 3 * sys->nthreads * sys->n_particles; i++)
     sys->force[i] = 0.0;
 #pragma omp parallel reduction(+:epot)
@@ -19,7 +22,12 @@ void newton(System *sys, CellList *clist) {
           for (int k = 0; k < 3; k++)
             dr[k] = sys->position[3*i+k] - sys->position[3*j+k];
           minimum_images(sys, dr);
-          epot += calculate_force(sys, i, j, dr, tid);
+
+
+    if (potential = "LJ")
+          epot += calculate_force_LJ(sys, i, j, dr, tid);
+    else if (potential = "MO")
+          epot += calculate_force_MO(sys, i, j, dr, tid);
         }
       }
       for (int d = 0; d < cell.nneigh; d++) {
@@ -32,7 +40,10 @@ void newton(System *sys, CellList *clist) {
             for (int k = 0; k < 3; k++)
               dr[k] = sys->position[3*i+k] - sys->position[3*j+k];
             minimum_images(sys, dr);
-            epot += calculate_force(sys, i, j, dr, tid);
+        if (potential = "LJ")
+              epot += calculate_force_LJ(sys, i, j, dr, tid);
+        else if (potential = "MO")
+              epot += calculate_force_MO(sys, i, j, dr, tid);
           }
         }
       }
@@ -57,14 +68,14 @@ inline void minimum_images(System *sys, double *dr) {
 }
 
 //__attribute__((always_inline,pure))
-inline double calculate_force(System *sys, int i, int j, double *dr, int tid) {
+inline double calculate_force_LJ(System *sys, int i, int j, double *dr, int tid) {
   double distance = 0.0;
   for (int k = 0; k < 3; k++) {
     distance += dr[k] * dr[k];
   }
   if (distance < sys->rcut * sys->rcut) {
     int offset = tid * 3 * sys->n_particles;
-    double rm2 = 1.0/distance;
+    double rm2 = 1.0/distance;    
     double rm6 = rm2 * rm2 * rm2;
     double rm12 = rm6 * rm6;
     double phi  = 4.0 * (rm12 - rm6);
@@ -78,6 +89,32 @@ inline double calculate_force(System *sys, int i, int j, double *dr, int tid) {
   else
     return 0.0;
 }
+
+
+
+inline double calculate_force_MO(System *sys, int i, int j, double *dr, int tid) {
+  double distance = 0.0;
+  for (int k = 0; k < 3; k++) {
+    distance += dr[k] * dr[k];
+  }
+  if (distance < sys->rcut * sys->rcut) {
+    int offset = tid * 3 * sys->n_particles;
+    
+    double x1 = -2 * distance + 2;
+    double x2 = - distance + 1;
+    double phi = exp (x1) - 2* exp (x2);
+    double dphi = -2 * exp (x1) + 2* exp (x2); 
+ 
+   for (int k = 0; k < 3; k++) {
+      sys->force[3*i+k+offset] += dphi * dr[k];
+      sys->force[3*j+k+offset] -= dphi * dr[k];
+    }
+    return phi - sys->phicut;
+  }
+  else
+    return 0.0;
+}
+
 
 void kinetic(System *sys) {
   double kin = 0.0;
