@@ -12,17 +12,17 @@ class CondicionesIniciales(object):
          self.vel       = None
          self.force     = None 
  
-      def cubo():
+      def cubo(self):
          position    = np.zeros((self.particles, 3))       #define arreglo posición
          number_side = math.ceil(self.particles)**(1/3)    #calcula raiz cubica de particulas(Lado de la red cúbica)  
          distance    = self.size/number_side                   
 
                                                            #Ubica las particulas una al lado de la otra en eL arreglo cúbico
          index_particle = 0;
-         for i in range(particles): 
-           for j in range(particles): 
-              for k in range(particles): 
-                 if index_particle == n_particles:
+         for i in range(self.particles): 
+           for j in range(self.particles): 
+              for k in range(self.particles): 
+                 if index_particle == self.particles:
                    break
                  position[index_particle, 0] = i * distance  
                  position[index_particle, 1] = j * distance
@@ -31,7 +31,7 @@ class CondicionesIniciales(object):
          self.coords = position
 
 
-      def cubo_random():                                  #Define posiciones random de las partículas en el cubo    
+      def cubo_random(self):                                  #Define posiciones random de las partículas en el cubo    
          number_side = math.ceil(self.particles)**(1/3)               
          distance    = self.size/number_side
          position    = np.random.random_sample((self.particles, 3))
