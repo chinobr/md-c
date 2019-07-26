@@ -38,7 +38,7 @@ class CondicionesIniciales(object):
 
 
       def cubo_random(self):                                  #Define posiciones random de las partículas en el cubo    
-          random   =  np.random.random_sample((self.cantidad_particulas, 3))
+          random   =  np.random.random_sample((self.particles, 3))
           position = self.size * random
           self.coords = position
 
