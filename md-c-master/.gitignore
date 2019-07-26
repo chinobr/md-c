@@ -1,0 +1,7 @@
+*~
+*.o
+*.e
+*.dat
+*.pdf
+*.pyc
+.gdb_history

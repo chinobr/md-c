@@ -1,0 +1,6 @@
+gcc -g -O0 -fopenmp -c -Wall -Werror -fpic md.c
+gcc -g -O0 -fopenmp -c -Wall -Werror -fpic system.c
+gcc -g -O0 -fopenmp -c -Wall -Werror -fpic force.c
+gcc -g -O0 -fopenmp -c -Wall -Werror -fpic cell.c
+gcc -g -O0 -fopenmp -c -Wall -Werror -fpic integrator.c
+gcc -shared -fopenmp md.o system.o force.o cell.o integrator.o -lm -o libmymd.so
